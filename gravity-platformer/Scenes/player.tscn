@@ -1,0 +1,41 @@
+[gd_scene load_steps=4 format=3 uid="uid://m4ikfk82vov5"]
+
+[ext_resource type="Script" uid="uid://du81e6atdhf44" path="res://Scripts/player.gd" id="1_cvnsp"]
+[ext_resource type="Texture2D" uid="uid://cv5my1m72mpcr" path="res://Assets/player.png" id="1_v0iea"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cvnsp"]
+radius = 14.0
+height = 48.0
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 2
+script = ExtResource("1_cvnsp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -24)
+shape = SubResource("CapsuleShape2D_cvnsp")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(2, -28)
+scale = Vector2(3, 3)
+texture = ExtResource("1_v0iea")
+hframes = 7
+frame = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="LeftRay" type="RayCast2D" parent="."]
+position = Vector2(-9, 0)
+target_position = Vector2(0, 19)
+
+[node name="RightRay" type="RayCast2D" parent="."]
+position = Vector2(9, 0)
+target_position = Vector2(0, 19)
+
+[node name="RotationCooldown" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="timeout" from="RotationCooldown" to="." method="_on_rotation_cooldown_timeout"]
