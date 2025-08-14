@@ -12,7 +12,11 @@ config_version=5
 
 config/name="Gravity platformer"
 config/features=PackedStringArray("4.4", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="uid://dkit1iosmegx8"
+
+[display]
+
+window/stretch/mode="canvas_items"
 
 [rendering]
 
