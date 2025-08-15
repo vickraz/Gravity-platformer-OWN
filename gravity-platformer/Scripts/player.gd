@@ -5,7 +5,7 @@ enum {IDLE, WALK, AIR, EDGE}
 const SPEED = 300.0
 const ACC = 1500.0 
 const JUMP_VELOCITY = 600.0
-const GRAVITY = 1200
+const GRAVITY = 1250
 const EDGE_SPEED = 30
 
 
@@ -132,10 +132,10 @@ func _walk_state(delta: float) -> void:
 	_movement(input_x, delta)
 	
 	if not left_ray.is_colliding() and right_ray.is_colliding():
-		if can_rotate:
+		if can_rotate and is_equal_approx(up_direction.rotated(-PI/2).angle(), velocity.angle()):
 			_rotate_left()
 	elif left_ray.is_colliding() and not right_ray.is_colliding():
-		if can_rotate:
+		if can_rotate and is_equal_approx(up_direction.rotated(PI/2).angle(), velocity.angle()):
 			_rotate_right()
 	elif velocity.x == 0:
 		state = IDLE

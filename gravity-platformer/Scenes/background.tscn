@@ -1,12 +1,11 @@
-[gd_scene format=3 uid="uid://m5wc6cplunyy"]
+[gd_scene load_steps=2 format=3 uid="uid://m5wc6cplunyy"]
+
+[ext_resource type="Texture2D" uid="uid://wog5cgiv6myi" path="res://Assets/Space Background.png" id="1_sn1xx"]
 
 [node name="Background" type="CanvasLayer"]
 layer = -100
 
-[node name="ColorRect" type="ColorRect" parent="."]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.312609, 0.291957, 0.275026, 1)
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("1_sn1xx")
+centered = false
