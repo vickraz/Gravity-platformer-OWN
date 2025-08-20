@@ -1,11 +1,83 @@
-[gd_scene load_steps=4 format=3 uid="uid://m4ikfk82vov5"]
+[gd_scene load_steps=9 format=3 uid="uid://m4ikfk82vov5"]
 
 [ext_resource type="Script" uid="uid://du81e6atdhf44" path="res://Scripts/player.gd" id="1_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://cv5my1m72mpcr" path="res://Assets/player.png" id="1_v0iea"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cvnsp"]
-radius = 13.0
+radius = 11.0
 height = 48.0
+
+[sub_resource type="Animation" id="Animation_cvnsp"]
+resource_name = "Idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_6t5aa"]
+resource_name = "Walk"
+length = 0.5
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0978934, 0.202132, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_vgqql"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+
+[sub_resource type="Animation" id="Animation_fkybt"]
+resource_name = "Jump"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [6]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_x3wgy"]
+_data = {
+&"Idle": SubResource("Animation_cvnsp"),
+&"Jump": SubResource("Animation_fkybt"),
+&"RESET": SubResource("Animation_vgqql"),
+&"Walk": SubResource("Animation_6t5aa")
+}
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
@@ -20,22 +92,26 @@ position = Vector2(2, -28)
 scale = Vector2(3, 3)
 texture = ExtResource("1_v0iea")
 hframes = 7
-frame = 6
+frame = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_x3wgy")
+}
+autoplay = "Idle"
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="LeftRay" type="RayCast2D" parent="."]
-position = Vector2(-9, 0)
-target_position = Vector2(0, 19)
+position = Vector2(-11, -2)
+target_position = Vector2(0, 20)
 
 [node name="RightRay" type="RayCast2D" parent="."]
-position = Vector2(9, 0)
-target_position = Vector2(0, 19)
+position = Vector2(11, -2)
+target_position = Vector2(0, 20)
 
 [node name="RotationCooldown" type="Timer" parent="."]
-wait_time = 0.5
+wait_time = 0.1
 one_shot = true
 
 [connection signal="timeout" from="RotationCooldown" to="." method="_on_rotation_cooldown_timeout"]
